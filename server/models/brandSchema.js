@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
-const userSchema = new Schema({
-    fullname:{
+const brandSchema = new Schema({
+    name:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
-    username: {
+    email: {
         type:String,
         required:true
     },
@@ -17,9 +18,13 @@ const userSchema = new Schema({
     createdAt: {
         type:Date,
         default:Date.now
-    }
+    },
+    rewards:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Reward'
+    }]
 })
 
-const User  = mongoose.model('User',userSchema)
+const Brand  = mongoose.model('Brand',brandSchema)
 
-export default User
+export default Brand
