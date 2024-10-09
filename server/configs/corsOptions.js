@@ -1,9 +1,9 @@
-allowedOrigin = ['http://localhost:5173', 'http://localhost:3000']
+const allowedOrigin = ['http://localhost:5173', 'http://localhost:3000']
 
 const corsOptions = {
     origin: (origin,callback) => {
         console.log(origin)
-        if(allowedOrigin.include(origin) || !origin){
+        if(allowedOrigin.includes(origin) || !origin){
             callback(null,true)
         }else{
             callback(new Error('Not Allowed by CORS'))
@@ -13,3 +13,5 @@ const corsOptions = {
     allowedHeader: ['Content-Types', 'Authorization'],
     credential: true
 }
+
+export default corsOptions

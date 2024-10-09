@@ -5,7 +5,7 @@ import corsOptions from './configs/corsOptions.js'
 import { config } from 'dotenv'
 
 const app = express()
-const PORT = 3500
+const PORT = 3000
 
 config()
 
@@ -50,5 +50,6 @@ app.get('/', (req,res) => {
 
 
 export {
-    app
+    app,
+    PORT
 }

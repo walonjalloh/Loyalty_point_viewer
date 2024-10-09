@@ -1,4 +1,4 @@
-import { app } from "./server.js"
+import { app,PORT } from "./server.js"
 
 //Serving starting point
 app.listen(PORT, () => {
