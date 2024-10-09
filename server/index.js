@@ -1,11 +1,16 @@
 import express from 'express'
 import cors from 'cors'
+import connectDB from './configs/mongodb.js'
+import corsOptions from './configs/corsOptions.js'
 import { config } from 'dotenv'
 
 const app = express()
 const PORT = 3500
 
+config()
+
 app.use(express.json()) 
+app.use(cors(corsOptions))
 
 
 //default route
