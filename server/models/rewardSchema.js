@@ -23,6 +23,11 @@ const rewardSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    completed : {
+        type:Boolean,
+        default:false,
+        required:true
+    }
 })
 
 const Reward = mongoose.model('Reward',rewardSchema)
