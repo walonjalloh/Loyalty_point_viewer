@@ -3,12 +3,15 @@ import cors from 'cors'
 import connectDB from './configs/mongodb.js'
 import corsOptions from './configs/corsOptions.js'
 import { config } from 'dotenv'
+import { userRouter } from './routes/userRoute.js'
+import { brandRouter } from './routes/brandRoute.js'
+import { rewardRouter } from './routes/rewardRoute.js'
 
 const app = express()
-const PORT = 3000
 
 config()
 
+//middlewares
 app.use(express.json()) 
 app.use(cors(corsOptions))
 
@@ -18,38 +21,16 @@ app.get('/', (req,res) => {
     res.send('Hello world')
 })
 
-//user sign up
+//user router with all the user routes
+app.use('/api/user', userRouter)
 
-//user sign in
+//brand router with all the brand routes
+app.use('/api/brand',brandRouter)
 
-//user delete
-
-//brand sign up
-
-//brand sign in
-
-//brand delete
-
-//create a reward
-
-//get all rewards
-
-//update the point on users
-
-//get all brands
-
-//get the specific user && getting the user rewards
-
-//delete a reward
-
-//updata a reward
-
-
-
-
+//reward router with all the reward routes
+app.use('/api/reward', rewardRouter)
 
 
 export {
     app,
-    PORT
 }

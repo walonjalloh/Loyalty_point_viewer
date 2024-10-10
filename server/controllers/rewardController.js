@@ -1,9 +1,6 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import Reward from "../models/rewardSchema";
-import UserRewards from "../models/userReward";
-import User from "../models/userSchema";
-import Brand from "../models/brandSchema";
+import Reward from "../models/rewardSchema.js";
+import UserRewards from "../models/userReward.js";
+import Brand from "../models/brandSchema.js";
 
 
 const createReward = async (req, res) => {
@@ -83,10 +80,10 @@ const deleteAReward = async (req, res) => {
 
 const updateReward = async (req, res) => {
     try {
-        const { rewardId, userId } = req.params; // Get rewardId and userId from request params
+        const { rewardId, userId } = req.params;
         const { rewardName, rewardDescription, pointsNeeded, completed } = req.body;
 
-        // Find and update the reward by ID
+        
         const updatedReward = await Reward.findByIdAndUpdate(
             rewardId,
             {
@@ -95,29 +92,29 @@ const updateReward = async (req, res) => {
                 pointsNeeded,
                 completed
             },
-            { new: true } // Return the updated document
+            { new: true } 
         );
 
         if (!updatedReward) {
             return res.status(404).json({ message: 'Reward not found' });
         }
 
-        // Find or create UserRewards entry for the user and brand
+        
         let userReward = await UserRewards.findOne({ userId, brandId: updatedReward.brandId });
         
         if (!userReward) {
-            // If no UserRewards entry exists for the user, create a new one
+            
             userReward = new UserRewards({
                 userId,
                 brandId: updatedReward.brandId,
-                points: pointsNeeded // Set the initial points to the points needed for the reward
+                points: pointsNeeded 
             });
         } else {
-            // If the UserRewards entry exists, add the points
+            
             userReward.points += pointsNeeded;
         }
 
-        // Save the user reward points
+    
         await userReward.save();
 
         res.status(200).json({
