@@ -19,10 +19,18 @@ const userSignin = async(req,res) => {
             return res.status(404).json({message: 'Login Failed'})
         }
     
-        const token = jwt.sign({_id:user_id.toString()}, process.env.JWT_SECRET)
+        const token = jwt.sign({_id:user_id.toString()}, process.env.JWT_SECRET,{
+            "expiresIn":"20m",
+        })
         const userResponse = user.toObject()
         delete userResponse.password
-        res.status(200).json({user:userResponse,token})
+        res.cookie("user",token, {
+            maxAge:24 * 60 * 60 * 1000,
+            http0nly:true,
+            secure:true,
+            sameSite:"None"
+        })
+        res.status(200).json({message:'Login Sucessfull'})
     }catch(error){
         res.status(400).json({message:error})
     }

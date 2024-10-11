@@ -22,6 +22,12 @@ const brandSignin = async(req,res) => {
         const token = jwt.sign({_id:brand._id.toString()},process.env.JWT_SECRET)
         const brandResponse = brand.toObject()
         delete brandResponse.password
+        res.cookie("brand",token,{
+            maxAge:24 * 60 * 60 * 1000,
+            httpOnly:true,
+            secure:true,
+            sameSite:"None"
+        })
         res.status(200).json({brand:brandResponse,token})
 
     }catch(error){
