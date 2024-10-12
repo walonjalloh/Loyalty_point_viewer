@@ -3,13 +3,13 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 const brandSignin = async(req,res) => {
-    const {name, password} = req.body
+    const {brandname, password} = req.body
     try{
-        if(!name || !password){
+        if(!brandname || !password){
             return res.status(404).json({message:'All fields are required'})
         }
 
-        const brand = await Brand.findOne({name})
+        const brand = await Brand.findOne({brandname})
         if(!brand){
             return res.status(404).json({message:'Brand doesnot exist'})
         }
@@ -23,7 +23,7 @@ const brandSignin = async(req,res) => {
         const brandResponse = brand.toObject()
         delete brandResponse.password
         res.cookie("brand",token,{
-            maxAge:24 * 60 * 60 * 1000,
+            maxAge: 24 * 60 * 60 * 1000,
             httpOnly:true,
             secure:true,
             sameSite:"None"
@@ -35,40 +35,46 @@ const brandSignin = async(req,res) => {
     }
 }
 
-const brandSignup = async(req,res) => {
-    const {name, password} = req.body
-    try{
-        if(!name || !password){
-            return res.status(404).json({message:'All fields are required'})
-        }
-        
-        const existBrand = Brand.findOne({name})
-        if(existBrand){
-            return res.status(404).json({message:'User already exist'})
-        }
 
-        const passwordHashed = await bcrypt.hash(password,10)
-
-        const brand = new Brand({
-            name,
-            password:passwordHashed
-        })
-
-        const token = await jwt.sign({_id:brand._id.toString()},process.env.JWT_SECRET)
-
-        await brand.save()
-        const brandResponse = brand.toObject()
-        delete brandResponse.password
-
-        res.status(201).json({
-            brand:brandResponse,token
-        })
-
-        
-    }catch(error){
-        res.status(400).json({message:'Error creating brand account'})
+const brandSignup = async (req, res) => {
+    const { brandname, brandpassword } = req.body;
+  
+    try {
+      if (!brandname || !brandpassword) {
+        return res.status(400).json({ message: 'All fields are required' });
+      }
+  
+      const existingBrand = await Brand.findOne({ brandname });
+      if (existingBrand) {
+        return res.status(400).json({ message: 'Brand already exists' });
+      }
+  
+      const passwordHashed = await bcrypt.hash(brandpassword, 10);
+  
+      const newBrand = new Brand({
+        brandname,
+        brandpassword: passwordHashed,
+      });
+  
+      await newBrand.save();
+  
+      const token = jwt.sign({ _id: newBrand._id.toString() }, process.env.JWT_SECRET);
+  
+      const brandResponse = newBrand.toObject();
+      delete brandResponse.brandpassword;
+  
+      res.status(201).json({ brand: brandResponse, token });
+    } catch (error) {
+      if (error.name === 'ValidationError') {
+        // Handle validation errors specifically
+        return res.status(400).json({ message: 'Validation error', errors: error.errors });
+      } else {
+        console.error('Error creating brand:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
     }
-}
+};
+
 
 const getAllBrand = async(req,res) => {
     const brands = await Brand.find({})

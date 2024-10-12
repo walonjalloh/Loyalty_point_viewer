@@ -4,7 +4,7 @@ import { brandSignin,brandSignup,deleteBrand,getAllBrand } from "../controllers/
 const brandRouter = express.Router()
 
 brandRouter.route('/signin').post(brandSignin)
-brandRouter.route('signup').post(brandSignup)
+brandRouter.route('/signup').post(brandSignup)
 brandRouter.route('/').get(getAllBrand)
 brandRouter.route('/:name').delete(deleteBrand)
 

@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema
 
 const brandSchema = new Schema({
-    name:{
+    brandname:{
         type:String,
         required:true,
-        unique:true
     },
-    password: {
+    brandpassword: {
         type:String,
         required:true
     },

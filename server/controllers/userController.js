@@ -50,7 +50,7 @@ const userSignup = async(req,res) => {
            return res.status(409).send('User all ready exist')
         }
 
-        const passwordHashed = bcrypt.hash(password,10)
+        const passwordHashed = await bcrypt.hash(password,10)
 
         const user = new User({
             fullname,

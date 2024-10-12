@@ -1,100 +1,82 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 
-interface BrandSignup {
-  brandname: string;
-  brandpassword: string;
-}
-
-interface UserSignup {
-  fullname: string;
+interface UserSignIn {
   username: string;
   password: string;
 }
 
-function Signup() {
-  const [type, setType] = useState({
-    user: false,
-    brand: false,
-  });
-  const [fullname, setFullname] = useState<string>('');
+interface BrandSignin {
+  brandname: string;
+  brandpassword: string;
+}
+
+function Signin() {
+  const [type, setType] = useState({ user: false, brand: false });
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [brandname, setBrandName] = useState<string>('');
   const [brandpassword, setBrandPassword] = useState<string>('');
 
   const handleUser = (): void => {
-    setType({
-      user: true,
-      brand: false,
-    });
+    setType({ user: true, brand: false });
   };
 
   const handleBrand = (): void => {
-    setType({
-      user: false,
-      brand: true,
-    });
-  };
-
-  const handleSubmitBrand = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    const url = 'http://localhost:3000/api/brand/signup';
-    try {
-      const data: BrandSignup = {
-        brandname,
-        brandpassword,
-      };
-
-      await axios.post(url, data);
-      console.log('Brand signup successful');
-      setBrandPassword('');
-      setBrandName('');
-      toast('Brand SignUp Sucessfull')
-    } catch (error) {
-      console.error('Error signing up brand:', error);
-      setBrandName('');
-      setBrandPassword('');
-      toast('Brand SignUp failed')
-    }
+    setType({ user: false, brand: true });
   };
 
   const handleSubmitUser = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    const url = 'http://localhost:3000/api/user/signup';
     try {
-      const data: UserSignup = {
-        fullname,
+      e.preventDefault();
+      const newUser: UserSignIn = {
         username,
         password,
       };
-
-      await axios.post(url, data);
-      console.log('User signup successful');
-      setPassword('');
-      setFullname('');
+      const url = 'http://localhost:3000/api/user/signin';
+      await axios.post(url, newUser);
+      toast('User login successful');
       setUsername('');
-      toast('User SignUp sucessfull')
+      setPassword('');
     } catch (error) {
-      console.error('Error signing up user:', error);
-      setFullname('');
-      setPassword('');
+      console.log(`Error occurred: ${error}`);
+      toast('User login failed');
       setUsername('');
-      toast('User Signup failed')
+      setPassword('');
+    }
+  };
+
+  const handleSubmitBrand = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    try {
+      e.preventDefault();
+      const newBrand: BrandSignin = {
+        brandname,
+        brandpassword,
+      };
+      const url = 'http://localhost:3000/api/brand/signin';
+      await axios.post(url, newBrand);
+      toast('Brand login successful');
+      setBrandName('');
+      setBrandPassword('');
+    } catch (error) {
+      console.log(`Error occurred: ${error}`);
+      toast('Brand login failed');
+      setBrandName('');
+      setBrandPassword('');
     }
   };
 
   return (
-    <main className="flex flex-col items-center justify-center ">
+    <section className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 rounded-lg shadow-md bg-white">
-        <h2 className="text-2xl font-bold mb-4 text-center">Signup</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Sign In</h2>
         <div className="flex justify-between mb-4">
           <button
             type="button"
             className={`px-4 py-2 rounded-md text-sm font-medium ${
-              type.brand ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
+              type.brand ? 'bg-blue-500 text-white hover:bg-blue-700' : 'bg-gray-200 hover:bg-gray-300'
             }`}
             onClick={handleBrand}
           >
@@ -103,7 +85,7 @@ function Signup() {
           <button
             type="button"
             className={`px-4 py-2 rounded-md text-sm font-medium ${
-              type.user ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
+              type.user ? 'bg-blue-500 text-white hover:bg-blue-700' : 'bg-gray-200 hover:bg-gray-300'
             }`}
             onClick={handleUser}
           >
@@ -113,19 +95,6 @@ function Signup() {
 
         {type.user && (
           <form onSubmit={handleSubmitUser}>
-            <div className="mb-4">
-              <label htmlFor="fullname" className="block text-sm font-medium mb-2">
-                Fullname
-              </label>
-              <input
-                type="text"
-                id="fullname"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
-                required
-                value={fullname}
-                onChange={(e) => setFullname(e.target.value)}
-              />
-            </div>
             <div className="mb-4">
               <label htmlFor="username" className="block text-sm font-medium mb-2">
                 Username
@@ -157,7 +126,7 @@ function Signup() {
                 type="submit"
                 className="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                User Sign up
+                Sign In
               </button>
             </div>
           </form>
@@ -196,21 +165,21 @@ function Signup() {
                 type="submit"
                 className="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Brand Sign up
+                Sign In
               </button>
             </div>
           </form>
         )}
 
         <div className="text-center mt-4">
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Already have an account? Sign in
+          <Link to="/register" className="text-blue-500 hover:underline">
+            Create an account
           </Link>
         </div>
         <ToastContainer/>
       </div>
-    </main>
+    </section>
   );
 }
 
-export default Signup;
+export default Signin;
