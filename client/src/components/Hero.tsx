@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <section className="relative  h-screen flex items-center justify-center text-white">
+    <section className="relative  h-screen flex items-center justify-center bg-white text-white">
       <div className="absolute inset-0 bg-black bg-opacity-30"></div>
 
       <div className="z-10 text-center px-6 md:px-12">
@@ -13,7 +13,7 @@ const Hero = () => {
           Track your rewards and loyalty points with ease. Register your brand or explore your reward history with just a few clicks.
         </p>
 
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-col md:flex-row justify-center gap-4">
           <Link to="/signup">
             <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-gray-200">
               View Reward
