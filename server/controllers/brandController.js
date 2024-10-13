@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 const brandSignin = async(req,res) => {
-    const {brandname, password} = req.body
+    const {brandname, brandpassword} = req.body
     try{
-        if(!brandname || !password){
+        if(!brandname || !brandpassword){
             return res.status(404).json({message:'All fields are required'})
         }
 
@@ -14,7 +14,7 @@ const brandSignin = async(req,res) => {
             return res.status(404).json({message:'Brand doesnot exist'})
         }
 
-        const passwordMatch = await bcrypt.compare(password,brand.password)
+        const passwordMatch = await bcrypt.compare(brandpassword,brand.brandpassword)
         if(!passwordMatch){
             return res.status(400).json({message:'Invalid credentials'})
         }

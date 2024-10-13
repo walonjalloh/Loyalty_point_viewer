@@ -19,9 +19,7 @@ const userSignin = async(req,res) => {
             return res.status(404).json({message: 'Login Failed'})
         }
     
-        const token = jwt.sign({_id:user_id.toString()}, process.env.JWT_SECRET,{
-            "expiresIn":"20m",
-        })
+        const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET)
         const userResponse = user.toObject()
         delete userResponse.password
         res.cookie("user",token, {
@@ -32,6 +30,7 @@ const userSignin = async(req,res) => {
         })
         res.status(200).json({message:'Login Sucessfull'})
     }catch(error){
+        console.log(`error occurred ${error}`)
         res.status(400).json({message:error})
     }
 

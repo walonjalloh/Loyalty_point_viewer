@@ -3,10 +3,10 @@ import { createReward,updateReward,deleteAReward,getAllRewards } from "../contro
 
 const rewardRouter = express.Router()
 
-rewardRouter.route('/:id').get(getAllRewards)
-rewardRouter.route('/create_reward').post(createReward)
-rewardRouter.route('/:id').delete(deleteAReward)
-rewardRouter.route('/:id/user/:id').put(updateReward)
+rewardRouter.route('/').get(getAllRewards)
+rewardRouter.route('/create').post(createReward)
+rewardRouter.route('/:brandId').delete(deleteAReward)
+rewardRouter.route('/:rewardId/user/:userId').put(updateReward)
 
 export {
     rewardRouter

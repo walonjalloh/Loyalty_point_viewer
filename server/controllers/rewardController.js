@@ -37,10 +37,7 @@ const createReward = async (req, res) => {
 
 const getAllRewards = async (req, res) => {
   try {
-    const { brandId } = req.params;
-
-    
-    const rewards = await Reward.find({ brandId });
+    const rewards = await Reward.find({});
 
     if (!rewards.length) {
       return res

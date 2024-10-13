@@ -1,73 +1,10 @@
-import { useState } from "react";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { useContext } from "react";
+import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
-
-interface UserSignIn {
-  username: string;
-  password: string;
-}
-
-interface BrandSignin {
-  brandname: string;
-  brandpassword: string;
-}
+import AuthContext from "../contexts/authContext";
 
 function Signin() {
-  const [type, setType] = useState({ user: false, brand: false });
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [brandname, setBrandName] = useState<string>('');
-  const [brandpassword, setBrandPassword] = useState<string>('');
-
-  const handleUser = (): void => {
-    setType({ user: true, brand: false });
-  };
-
-  const handleBrand = (): void => {
-    setType({ user: false, brand: true });
-  };
-
-  const handleSubmitUser = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    try {
-      e.preventDefault();
-      const newUser: UserSignIn = {
-        username,
-        password,
-      };
-      const url = 'http://localhost:3000/api/user/signin';
-      await axios.post(url, newUser);
-      toast('User login successful');
-      setUsername('');
-      setPassword('');
-    } catch (error) {
-      console.log(`Error occurred: ${error}`);
-      toast('User login failed');
-      setUsername('');
-      setPassword('');
-    }
-  };
-
-  const handleSubmitBrand = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    try {
-      e.preventDefault();
-      const newBrand: BrandSignin = {
-        brandname,
-        brandpassword,
-      };
-      const url = 'http://localhost:3000/api/brand/signin';
-      await axios.post(url, newBrand);
-      toast('Brand login successful');
-      setBrandName('');
-      setBrandPassword('');
-    } catch (error) {
-      console.log(`Error occurred: ${error}`);
-      toast('Brand login failed');
-      setBrandName('');
-      setBrandPassword('');
-    }
-  };
-
+  const auth = useContext(AuthContext)
   return (
     <section className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 rounded-lg shadow-md bg-white">
@@ -76,25 +13,25 @@ function Signin() {
           <button
             type="button"
             className={`px-4 py-2 rounded-md text-sm font-medium ${
-              type.brand ? 'bg-blue-500 text-white hover:bg-blue-700' : 'bg-gray-200 hover:bg-gray-300'
+              auth?.type.brand ? 'bg-blue-500 text-white hover:bg-blue-700' : 'bg-gray-200 hover:bg-gray-300'
             }`}
-            onClick={handleBrand}
+            onClick={auth?.handleBrand}
           >
             Brand
           </button>
           <button
             type="button"
             className={`px-4 py-2 rounded-md text-sm font-medium ${
-              type.user ? 'bg-blue-500 text-white hover:bg-blue-700' : 'bg-gray-200 hover:bg-gray-300'
+              auth?.type.user ? 'bg-blue-500 text-white hover:bg-blue-700' : 'bg-gray-200 hover:bg-gray-300'
             }`}
-            onClick={handleUser}
+            onClick={auth?.handleUser}
           >
             User
           </button>
         </div>
 
-        {type.user && (
-          <form onSubmit={handleSubmitUser}>
+        {auth?.type.user && (
+          <form onSubmit={auth?.handleUserLogin}>
             <div className="mb-4">
               <label htmlFor="username" className="block text-sm font-medium mb-2">
                 Username
@@ -104,8 +41,8 @@ function Signin() {
                 id="username"
                 className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
                 required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={auth.username}
+                onChange={(e) => auth?.setUsername(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -117,8 +54,8 @@ function Signin() {
                 id="password"
                 className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={auth.password}
+                onChange={(e) => auth.setPassword(e.target.value)}
               />
             </div>
             <div className="flex justify-center">
@@ -132,8 +69,8 @@ function Signin() {
           </form>
         )}
 
-        {type.brand && (
-          <form onSubmit={handleSubmitBrand}>
+        {auth?.type.brand && (
+          <form onSubmit={auth.handleBrandLogin}>
             <div className="mb-4">
               <label htmlFor="brandname" className="block text-sm font-medium mb-2">
                 Brand Name
@@ -143,8 +80,8 @@ function Signin() {
                 id="brandname"
                 className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
                 required
-                value={brandname}
-                onChange={(e) => setBrandName(e.target.value)}
+                value={auth.brandname}
+                onChange={(e) => auth.setBrandName(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -156,8 +93,8 @@ function Signin() {
                 id="password"
                 className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
                 required
-                value={brandpassword}
-                onChange={(e) => setBrandPassword(e.target.value)}
+                value={auth.brandpassword}
+                onChange={(e) => auth.setBrandPassword(e.target.value)}
               />
             </div>
             <div className="flex justify-center">

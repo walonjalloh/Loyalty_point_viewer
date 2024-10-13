@@ -4,11 +4,12 @@ import Footer from "./components/Footer"
 import Hero from "./components/Hero"
 import Navbar from "./components/Navbar"
 import Signin from "./components/Signin"
+import Signup from "./components/Signup"
 import UserDashboard from "./components/UserDashboard"
 import ViewReward from "./components/ViewReward"
 
 function App(){
-  return(
+  return(   
     <div className="w-full h-full">
       <Navbar/>
       {/* <Signin/> */}
@@ -18,7 +19,9 @@ function App(){
       <Footer/>
       <UserDashboard/>
       <BrandDashboard/>
-    </div>
+      <Signin/>
+      <Signup/>
+    </div> 
   )
 }
 export default App
