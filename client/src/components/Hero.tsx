@@ -16,12 +16,12 @@ const Hero = () => {
         <div className="flex justify-center gap-4">
           <Link to="/signup">
             <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-gray-200">
-              Register Brand
+              View Reward
             </button>
           </Link>
           <Link to="/login">
             <button className="bg-indigo-500 px-6 py-3 rounded-full font-medium hover:bg-indigo-400">
-              View Dashboard
+              Create Reward
             </button>
           </Link>
         </div>
