@@ -5,7 +5,7 @@ const userRouter = express.Router()
 
 userRouter.route('/signin').post(userSignin)
 userRouter.route('/signup').post(userSignup)
-userRouter.route('/:email').delete(deleteUser).get(getOneUser)
+userRouter.route('/:username').delete(deleteUser).get(getOneUser)
 
 
 export {

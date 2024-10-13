@@ -72,9 +72,9 @@ const userSignup = async(req,res) => {
 }
 
 const getOneUser = async(req,res) => {
-    const { email } = req.params
+    const { username } = req.params
     try {
-        const user = await User.findOne({email})
+        const user = await User.findOne({ username })
         if(!user){
             return res.status(404).json({message: 'Invalid user'})
         }

@@ -1,5 +1,5 @@
 import Reward from "../models/rewardSchema.js";
-import UserRewards from "../models/userReward.js";
+import User from "../models/userSchema.js";
 import Brand from "../models/brandSchema.js";
 
 
@@ -76,54 +76,45 @@ const deleteAReward = async (req, res) => {
 };
 
 const updateReward = async (req, res) => {
-    try {
-        const { rewardId, userId } = req.params;
-        const { rewardName, rewardDescription, pointsNeeded, completed } = req.body;
+  try {
+    const { rewardId, userId } = req.params;
+    const { rewardName, rewardDescription, pointsNeeded, completed } = req.body;
 
-        
-        const updatedReward = await Reward.findByIdAndUpdate(
-            rewardId,
-            {
-                rewardName,
-                rewardDescription,
-                pointsNeeded,
-                completed
-            },
-            { new: true } 
-        );
+    const updatedReward = await Reward.findByIdAndUpdate(
+      rewardId,
+      {
+        rewardName,
+        rewardDescription,
+        pointsNeeded,
+        completed,
+      },
+      { new: true } 
+    );
 
-        if (!updatedReward) {
-            return res.status(404).json({ message: 'Reward not found' });
-        }
-
-        
-        let userReward = await UserRewards.findOne({ userId, brandId: updatedReward.brandId });
-        
-        if (!userReward) {
-            
-            userReward = new UserRewards({
-                userId,
-                brandId: updatedReward.brandId,
-                points: pointsNeeded 
-            });
-        } else {
-            
-            userReward.points += pointsNeeded;
-        }
-
-    
-        await userReward.save();
-
-        res.status(200).json({
-            message: 'Reward updated and points added to user successfully!',
-            updatedReward,
-            userReward
-        });
-    } catch (error) {
-        console.error('Error updating reward and adding points:', error);
-        res.status(500).json({ message: 'Server error' });
+    if (!updatedReward) {
+      return res.status(404).json({ message: "Reward not found" });
     }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.points += pointsNeeded;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Reward updated, and points added to user successfully!",
+      updatedReward,
+      user
+    });
+  } catch (error) {
+    console.error("Error updating reward and adding points:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 };
+
 
 
 export { createReward, getAllRewards, deleteAReward, updateReward };
