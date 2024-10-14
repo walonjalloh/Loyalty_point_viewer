@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')!).render(
       <AuthProvider>
         <Router>
           <Routes>
-            <Route path='/' element={<App/>}/>
+            <Route path='/*' element={<App/>}/>
           </Routes>
         </Router>
       </AuthProvider>
