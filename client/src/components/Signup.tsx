@@ -49,6 +49,32 @@ function Signup() {
               />
             </div>
             <div className="mb-4">
+              <label htmlFor="address" className="block text-sm font-medium mb-2">
+                Address
+              </label>
+              <input
+                type="text"
+                id="address"
+                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                required
+                value={auth.address}
+                onChange={(e) => auth.setAddress(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="age" className="block text-sm font-medium mb-2">
+                Age
+              </label>
+              <input
+                type="text"
+                id="age"
+                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                required
+                value={auth.age}
+                onChange={(e) => auth.setAge(Number(e.target.value))}
+              />
+            </div>
+            <div className="mb-4">
               <label htmlFor="username" className="block text-sm font-medium mb-2">
                 Username
               </label>
@@ -101,12 +127,12 @@ function Signup() {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
+              <label htmlFor="brandpassword" className="block text-sm font-medium mb-2">
                 Password
               </label>
               <input
                 type="password"
-                id="password"
+                id="brandpassword"
                 className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
                 required
                 value={auth.brandpassword}

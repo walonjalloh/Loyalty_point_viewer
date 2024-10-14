@@ -11,6 +11,8 @@ export const AuthProvider = ({children}:ContextProp) => {
   const [type, setType] = useState({ user: false, brand: false });
   const [fullname, setFullname] = useState<string>("")
   const [username, setUsername] = useState<string>("");
+  const [address,setAddress] = useState<string>("");
+  const [age, setAge] = useState<number | undefined>()
   const [password, setPassword] = useState<string>("");
   const [brandname, setBrandName] = useState<string>("");
   const [brandpassword, setBrandPassword] = useState<string>("");
@@ -98,6 +100,8 @@ export const AuthProvider = ({children}:ContextProp) => {
       const data: Auth = {
         fullname,
         username,
+        age,
+        address,
         password,
       };
 
@@ -106,12 +110,16 @@ export const AuthProvider = ({children}:ContextProp) => {
       setPassword("");
       setFullname("");
       setUsername("");
+      setAge(undefined);
+      setAddress("")
       toast("User SignUp sucessfull");
     } catch (error) {
       console.error("Error signing up user:", error);
       setFullname("");
       setPassword("");
       setUsername("");
+      setAge(undefined);
+      setAddress("")
       toast("User Signup failed");
     }
   };
@@ -135,6 +143,8 @@ export const AuthProvider = ({children}:ContextProp) => {
         setBrandName,
         setBrandPassword,
         setFullname, 
+        setAddress,
+        setAge
       }}>
         {children}
       </AuthContext.Provider>

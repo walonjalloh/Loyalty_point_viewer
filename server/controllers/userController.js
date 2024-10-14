@@ -28,7 +28,7 @@ const userSignin = async(req,res) => {
             secure:true,
             sameSite:"None"
         })
-        res.status(200).json({message:'Login Sucessfull'})
+        res.status(200).json({message:'Login Sucessfull',user:userResponse})
     }catch(error){
         console.log(`error occurred ${error}`)
         res.status(400).json({message:error})
@@ -37,10 +37,10 @@ const userSignin = async(req,res) => {
 }
 
 const userSignup = async(req,res) => {
-    const { fullname, username, password }  = req.body
+    const { fullname, username, password,address,age }  = req.body
     try {
         
-        if(!fullname || !username || !password){
+        if(!fullname || !username || !password || !address || !age){
             return res.send(`All fields are required`)
         }
 
@@ -53,6 +53,8 @@ const userSignup = async(req,res) => {
 
         const user = new User({
             fullname,
+            address,
+            age,
             username,
             password:passwordHashed
         })

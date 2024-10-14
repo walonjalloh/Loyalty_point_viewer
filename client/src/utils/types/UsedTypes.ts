@@ -15,7 +15,9 @@ interface Auth {
   username?:string,
   password?:string,
   brandname?:string,
-  brandpassword?:string
+  brandpassword?:string,
+  address?:string,
+  age?:number | undefined
   
 }
 
@@ -52,6 +54,8 @@ interface AuthContextType extends Auth {
   setBrandName: React.Dispatch<React.SetStateAction<string>>;
   setBrandPassword: React.Dispatch<React.SetStateAction<string>>;
   setFullname: React.Dispatch<React.SetStateAction<string>>;
+  setAddress:React.Dispatch<React.SetStateAction<string>>
+  setAge:React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
 export type {

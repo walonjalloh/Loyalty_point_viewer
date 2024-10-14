@@ -85,12 +85,12 @@ function Signin() {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
-                Password
+              <label htmlFor="brandpassword" className="block text-sm font-medium mb-2">
+                Brand Password
               </label>
               <input
                 type="password"
-                id="password"
+                id="brandpassword"
                 className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
                 required
                 value={auth.brandpassword}

@@ -6,7 +6,7 @@ function UserDashboard() {
   const [user, setUser] = useState<User[]>(newUser); // Assuming newUser returns a single user
 
   return (
-    <section className=" p-6 w-full max-w-4xl mx-auto rounded-lg shadow-lg">
+    <section className=" p-6 w-full max-w-4xl mx-auto min-h-20 rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-8 border-b pb-4">
         <h1 className="text-2xl md:text-3xl font-extrabold text-gray-800">
           User Profile
@@ -28,6 +28,12 @@ function UserDashboard() {
               </p>
               <p className="text-lg text-gray-800">
                 <span className="font-medium">Username:</span> {user.username}
+              </p>
+              <p className="text-lg text-gray-800">
+                <span className="font-medium">Age:</span> {user.age}
+              </p>
+              <p className="text-lg text-gray-800">
+                <span className="font-medium">Address:</span> {user.address}
               </p>
             </div>
 
