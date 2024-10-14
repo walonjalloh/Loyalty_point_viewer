@@ -1,47 +1,28 @@
-import { useState } from "react"
-import axios from "axios"
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { useContext } from "react";
+import RewardContext from "../contexts/rewardContext";
 
-interface CreateReward {
-  rewardName: string;
-  rewardDescription: string;
-  pointsNeeded: number | undefined;
-}
 
 function CreateReward() {
-  const [rewardName, setRewardName] = useState<string>("");
-  const [rewardDescription, setRewardDescription] = useState<string>("");
-  const [pointsNeeded, setPointsNeeded] = useState<number  | undefined>();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    try {
-      const newReward: CreateReward = {
-        rewardName,
-        rewardDescription,
-        pointsNeeded,
-      };
-      const url = 'http://localhost:3000/api/reward';
-      await axios.post(url, newReward);
-      toast('Reward created successfully');
-      setPointsNeeded(0);
-      setRewardDescription('');
-      setRewardName('');
-    } catch (error) {
-      console.log(`Error occurred: ${error}`);
-      toast('Reward creation failed');
-      setPointsNeeded(0);
-      setRewardDescription('');
-      setRewardName('');
-    }
-  };
+  const createReward = useContext(RewardContext)
 
   return (
     <section className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 rounded-lg shadow-md bg-white">
         <h2 className="text-2xl font-bold mb-4 text-center">Create Reward</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={createReward?.handleCreateReward} className="space-y-4">
           <div className="flex flex-col">
+            <label htmlFor="brandId" className="text-sm font-medium mb-2">
+              BrandId
+            </label>
+            <input
+              type="text"
+              className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+              id="brandId"
+              required
+              value={createReward?.brandId}
+              onChange={(e) => createReward?.setBrandId(e.target.value)}
+            />
             <label htmlFor="rewardName" className="text-sm font-medium mb-2">
               Reward Name
             </label>
@@ -50,20 +31,23 @@ function CreateReward() {
               id="rewardName"
               className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
               required
-              value={rewardName}
-              onChange={(e) => setRewardName(e.target.value)}
+              value={createReward?.rewardName}
+              onChange={(e) => createReward?.setRewardName(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="rewardDescription" className="text-sm font-medium mb-2">
+            <label
+              htmlFor="rewardDescription"
+              className="text-sm font-medium mb-2"
+            >
               Reward Description
             </label>
             <textarea
               id="rewardDescription"
               className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1 h-24 resize-none"
               required
-              value={rewardDescription}
-              onChange={(e) => setRewardDescription(e.target.value)}
+              value={createReward?.rewardDescription}
+              onChange={(e) => createReward?.setRewardDescription(e.target.value)}
             />
           </div>
           <div className="flex flex-col">
@@ -75,8 +59,8 @@ function CreateReward() {
               id="pointsNeeded"
               className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
               required
-              value={pointsNeeded}
-              onChange={(e) => setPointsNeeded(Number(e.target.value))}
+              value={createReward?.pointsNeeded}
+              onChange={(e) => createReward?.setPointsNeeded(Number(e.target.value))}
             />
           </div>
           <div className="flex justify-center">
@@ -89,7 +73,11 @@ function CreateReward() {
           </div>
         </form>
       </div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+      />
     </section>
   );
 }

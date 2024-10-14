@@ -113,7 +113,11 @@ function Signin() {
             Create an account
           </Link>
         </div>
-        <ToastContainer/>
+        <ToastContainer
+             position="top-right"
+             autoClose={5000}
+             hideProgressBar={false}
+        />
       </div>
     </section>
   );

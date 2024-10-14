@@ -129,7 +129,11 @@ function Signup() {
             Already have an account? Sign in
           </Link>
         </div>
-        <ToastContainer/>
+        <ToastContainer
+         position="top-right"
+         autoClose={5000}
+         hideProgressBar={false}
+        />
       </div>
     </main>
   );

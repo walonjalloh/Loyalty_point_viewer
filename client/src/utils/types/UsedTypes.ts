@@ -20,7 +20,23 @@ interface Auth {
 }
 
 interface RewardProp {
-  reward:Reward[]
+  reward:Reward[],
+  brandId:string,
+  rewardName:string,
+  rewardDescription:string,
+  pointsNeeded:number | undefined,
+  handleCreateReward:(e:React.FormEvent<HTMLFormElement>)=>Promise<void>,
+  setBrandId:React.Dispatch<React.SetStateAction<string>>
+  setRewardName:React.Dispatch<React.SetStateAction<string>>
+  setRewardDescription:React.Dispatch<React.SetStateAction<string>>
+  setPointsNeeded:React.Dispatch<React.SetStateAction<number | undefined>>
+}
+
+interface CreateReward {
+  brandId:string,
+  rewardName:string,
+  rewardDescription:string,
+  pointsNeeded:number | undefined
 }
 
 interface AuthContextType extends Auth {
@@ -43,5 +59,6 @@ export type {
   Auth,
   ContextProp,
   AuthContextType,
-  RewardProp
+  RewardProp,
+  CreateReward
 }

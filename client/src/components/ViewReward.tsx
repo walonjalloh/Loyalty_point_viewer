@@ -6,9 +6,9 @@ function ViewReward() {
 
   return (
     <section className="bg-gray-100 p-4 rounded-md shadow-sm">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col justify-between items-center mb-4">
         <p className="text-xl font-bold">Available Rewards</p>
-        {rewardContext?.reward.length === 0 && <p className="text-red-500">Reward List is empty</p>}
+        {rewardContext?.reward.length === 0 && <p className="text-red-500 text-3xl my-[60px]">Reward List is empty</p>}
       </div>
       <main className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {rewardContext?.reward.map(reward => (

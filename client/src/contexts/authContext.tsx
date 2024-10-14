@@ -1,8 +1,8 @@
 import {  createContext, useState } from "react";
-import { Auth, ContextProp, AuthContextType } from "../types/UsedTypes";
+import { Auth, ContextProp, AuthContextType } from "../utils/types/UsedTypes";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BrandSignIn, UserSignIn, BrandSignup, UserSignup } from "../url/url";
+import { BrandSignIn, UserSignIn, BrandSignup, UserSignup } from "../utils/url/url";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

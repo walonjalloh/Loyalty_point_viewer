@@ -13,7 +13,7 @@ function App(){
     <div className="w-full h-full">
       <Navbar/>
       {/* <Signin/> */}
-      {/* <CreateReward/> */}
+      <CreateReward/>
       <Hero/>
       <ViewReward/>
       <Footer/>
