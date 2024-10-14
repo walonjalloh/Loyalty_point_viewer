@@ -6,6 +6,7 @@ const BrandSignIn:string = 'http://localhost:3000/api/brand/signin'
 const UserSignup:string = 'http://localhost:3000/api/user/signup'
 const BrandSignup:string = 'http://localhost:3000/api/brand/signup'
 const rewardCreaate:string = 'http://localhost:3000/api/reward'
+const getOneUser:string = 'http://localhost:3000/api/user/walon'
 
 export {
     getAllReward,
@@ -13,5 +14,6 @@ export {
     UserSignup,
     BrandSignIn,
     BrandSignup,
-    rewardCreaate
+    rewardCreaate,
+    getOneUser
 }

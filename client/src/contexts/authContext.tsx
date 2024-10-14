@@ -1,8 +1,8 @@
-import {  createContext, useState } from "react";
-import { Auth, ContextProp, AuthContextType } from "../utils/types/UsedTypes";
+import {  createContext, useEffect, useState } from "react";
+import { Auth, ContextProp, AuthContextType,User } from "../utils/types/UsedTypes";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BrandSignIn, UserSignIn, BrandSignup, UserSignup } from "../utils/url/url";
+import { BrandSignIn, UserSignIn, BrandSignup, UserSignup,getOneUser } from "../utils/url/url";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,6 +16,21 @@ export const AuthProvider = ({children}:ContextProp) => {
   const [password, setPassword] = useState<string>("");
   const [brandname, setBrandName] = useState<string>("");
   const [brandpassword, setBrandPassword] = useState<string>("");
+  const [user, setUser] = useState<User[]>([])
+
+  //getting the details of the user that signin's 
+  useEffect(()=> {
+    const getUser = async():Promise<void> => {
+        try{
+            const response =  await axios.get(getOneUser)
+            console.log(response.data)
+            setUser(user.concat(response.data))
+        }catch(error){
+            console.log(`error occurred ${error}`)
+        } 
+    }
+    getUser()
+  },[])
 
   const handleUser = (): void => {
     setType({ user: true, brand: false });
@@ -124,6 +139,8 @@ export const AuthProvider = ({children}:ContextProp) => {
     }
   };
 
+
+
   return (
     <AuthContext.Provider value={{
         handleUserLogin,
@@ -144,7 +161,8 @@ export const AuthProvider = ({children}:ContextProp) => {
         setBrandPassword,
         setFullname, 
         setAddress,
-        setAge
+        setAge,
+        user
       }}>
         {children}
       </AuthContext.Provider>

@@ -65,6 +65,12 @@ const userSignup = async(req,res) => {
 
         const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET)
 
+        res.cookie("user", {
+            maxAge: 24 * 60 * 60 * 1000,
+            http0nly:true,
+            secure:true,
+            sameSite:"None"
+        })
         res.status(201).json({user:userResponse,token})
         
 

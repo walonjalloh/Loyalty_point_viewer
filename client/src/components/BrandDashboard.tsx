@@ -8,6 +8,7 @@ interface Reward {
 
 interface Brand {
   name: string;
+  id:string
   rewards: Reward[];
 }
 
@@ -19,6 +20,7 @@ const BrandDashboard: React.FC = () => {
     const fetchBrandData = async () => {
       const data: Brand = {
         name: "Brand A",
+        id:"jdkokfokofkokommcmc",
         rewards: [
           { _id: "1", rewardName: "10% Discount", pointsNeeded: 50 },
           { _id: "2", rewardName: "Free Shipping", pointsNeeded: 30 },
@@ -34,8 +36,9 @@ const BrandDashboard: React.FC = () => {
   return (
     <section className="p-8  max-h-screen">
       <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <header className="mb-6">
+        <header className="mb-6 flex flex-col gap-2">
           <h1 className="text-3xl font-bold text-gray-800">{brand.name} Dashboard</h1>
+          <p className="font-medium ">Brand Id: {brand.id}</p>
           <p className="text-gray-600">Manage your rewards and track performance</p>
         </header>
 

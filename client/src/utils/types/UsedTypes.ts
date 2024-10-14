@@ -18,6 +18,7 @@ interface Auth {
   brandpassword?:string,
   address?:string,
   age?:number | undefined
+  user?:User[] 
   
 }
 
@@ -56,6 +57,16 @@ interface AuthContextType extends Auth {
   setFullname: React.Dispatch<React.SetStateAction<string>>;
   setAddress:React.Dispatch<React.SetStateAction<string>>
   setAge:React.Dispatch<React.SetStateAction<number | undefined>>
+  user:User[]
+}
+
+interface User {
+  fullname:string,
+  id:string,
+  username:string,
+  points:number,
+  age:number,
+  address:string
 }
 
 export type {
@@ -64,5 +75,6 @@ export type {
   ContextProp,
   AuthContextType,
   RewardProp,
-  CreateReward
+  CreateReward,
+  User
 }

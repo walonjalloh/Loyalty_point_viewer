@@ -42,7 +42,7 @@ const getAllRewards = async (req, res) => {
     if (!rewards.length) {
       return res
         .status(404)
-        .json({ message: "No rewards found for this brand" });
+        .json({ message: "No rewards available" });
     }
 
     res.status(200).json(rewards);

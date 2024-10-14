@@ -45,8 +45,7 @@ export const RewardProvider = ({ children }:ContextProp) => {
     useEffect(()=>{
         const getRewards = async():Promise<void> => {
             try {
-                const url = getAllReward
-                const response =  await axios.get(url)
+                const response =  await axios.get(getAllReward)
                 console.log(`data retrived successfully ${response}`)
                 setReward(response.data)
             }catch(error){
