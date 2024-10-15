@@ -3,7 +3,7 @@ import AuthContext from "../contexts/authContext";
 
 function UserDashboard() {
   const  auth  = useContext(AuthContext)
-  const user = auth?.user
+  const user = auth?.userAuth
   
 
   return (

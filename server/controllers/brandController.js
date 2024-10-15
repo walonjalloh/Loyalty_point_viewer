@@ -69,7 +69,6 @@ const brandSignup = async (req, res) => {
     res.status(201).json({ brand: brandResponse});
   } catch (error) {
     if (error.name === "ValidationError") {
-      // Handle validation errors specifically
       return res
         .status(400)
         .json({ message: "Validation error", errors: error.errors });

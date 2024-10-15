@@ -14,12 +14,12 @@ const Hero = () => {
         </p>
 
         <div className="flex flex-col md:flex-row justify-center gap-4">
-          <Link to="/signup">
+          <Link to="/reward">
             <button className="bg-white text-indigo-600 px-6 py-3 rounded-full font-medium hover:bg-gray-200">
               View Reward
             </button>
           </Link>
-          <Link to="/login">
+          <Link to="/create_reward">
             <button className="bg-indigo-500 px-6 py-3 rounded-full font-medium hover:bg-indigo-400">
               Create Reward
             </button>

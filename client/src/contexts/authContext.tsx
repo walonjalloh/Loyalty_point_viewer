@@ -1,8 +1,8 @@
-import {  createContext, useEffect, useState } from "react";
-import { Auth, ContextProp, AuthContextType,User } from "../utils/types/UsedTypes";
+import {  createContext,useState } from "react";
+import { Auth, ContextProp, AuthContextType, UserAuth, BrandAuth } from "../utils/types/UsedTypes";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { BrandSignIn, UserSignIn, BrandSignup, UserSignup,getOneUser } from "../utils/url/url";
+import { BrandSignIn, UserSignIn, BrandSignup, UserSignup} from "../utils/url/url";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,21 +16,13 @@ export const AuthProvider = ({children}:ContextProp) => {
   const [password, setPassword] = useState<string>("");
   const [brandname, setBrandName] = useState<string>("");
   const [brandpassword, setBrandPassword] = useState<string>("");
-  const [user, setUser] = useState<User[]>([])
 
-  //getting the details of the user that signin's 
-  useEffect(()=> {
-    const getUser = async():Promise<void> => {
-        try{
-            const response =  await axios.get(getOneUser)
-            console.log(response.data)
-            setUser(user.concat(response.data))
-        }catch(error){
-            console.log(`error occurred ${error}`)
-        } 
-    }
-    getUser()
-  },[])
+
+  const [userAuth, setUserAuth] = useState<UserAuth[]>([])
+  const [brandAuth, setBrandAuth] = useState<BrandAuth[]>([])
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+
+  
 
   const handleUser = (): void => {
     setType({ user: true, brand: false });
@@ -50,7 +42,18 @@ export const AuthProvider = ({children}:ContextProp) => {
         password,
       };
       const response = await axios.post(UserSignIn, newUser);
-      console.log(response.data)
+      console.log(response?.data?.token)
+      const user:UserAuth = {
+        fullname:response.data.user.fullname,
+        username:response.data.user.username,
+        age:response.data.user.age,
+        address:response.data.user.address,
+        token:response.data.token,
+        points:response.data.user.points
+      }
+      setIsAuthenticated(!isAuthenticated)
+      setType({user:true,brand:false})
+      setUserAuth(userAuth.concat(user))
       toast("User login successful");
       setUsername("");
       setPassword("");
@@ -61,6 +64,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       setPassword("");
     }
   };
+  console.log(userAuth)
 
   const handleBrandLogin = async (
     e: React.FormEvent<HTMLFormElement>
@@ -71,10 +75,20 @@ export const AuthProvider = ({children}:ContextProp) => {
         brandname,
         brandpassword,
       };
-      await axios.post(BrandSignIn, newBrand);
+      const response = await axios.post(BrandSignIn, newBrand);
+      console.log(response?.data?.token)
+      const brand:BrandAuth = {
+        brandname:response.data.brand.brandname,
+        brandId:response.data.brand._id,
+        token:response.data.token
+      }
+      setBrandAuth(brandAuth.concat(brand))
+      setIsAuthenticated(!isAuthenticated)
+      setType({user:false,brand:true})
       toast("Brand login successful");
       setBrandName("");
       setBrandPassword("");
+      console.log(brandAuth)
     } catch (error) {
       console.log(`Error occurred: ${error}`);
       toast("Brand login failed");
@@ -82,6 +96,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       setBrandPassword("");
     }
   };
+
 
   //user and brand sign up
 
@@ -163,7 +178,9 @@ export const AuthProvider = ({children}:ContextProp) => {
         setFullname, 
         setAddress,
         setAge,
-        user
+        userAuth,
+        brandAuth,
+        isAuthenticated
       }}>
         {children}
       </AuthContext.Provider>

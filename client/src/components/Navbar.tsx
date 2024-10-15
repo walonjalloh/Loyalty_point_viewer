@@ -1,25 +1,21 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
+import AuthContext from "../contexts/authContext";
+
 
 function Navbar() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [isOpened, setIsOpened] = useState<boolean>(false);
-  const [type, setType] = useState({
-    user: false,
-    brand: true,
-  });
 
+  const auth = useContext(AuthContext)
+
+  const isAuthenticated = auth?.isAuthenticated
+  const type = auth?.type
   const handleIsOpended = (): void => {
     setIsOpened(!isOpened);
   };
 
-  const handleLogout = () => {
-    // Clear authentication token and update state
-    localStorage.removeItem('authToken');
-    setIsAuthenticated(false);
-    setType({ user: false, brand: false });
-  };
+
 
   return (
     <header className="bg-white border-b sticky top-0 z-50 shadow-sm">
@@ -36,16 +32,16 @@ function Navbar() {
           )}
           {isAuthenticated && (
             <div className="flex space-x-4">
-              {type.user && (
+              {type?.user && (
                 <div className="flex space-x-2">
-                  <Link to="/userprofile" className="text-blue-500 hover:underline">Profile</Link>
-                  <Link to="/" onClick={handleLogout} className="text-blue-500 hover:underline">Logout</Link>
+                  <Link to="/user_profile" className="text-blue-500 hover:underline">Profile</Link>
+                  <Link to="/"  className="text-blue-500 hover:underline">Logout</Link>
                 </div>
               )}
-              {type.brand && (
+              {type?.brand && (
                 <div className="flex space-x-2">
-                  <Link to="/createreward" className="text-blue-500 hover:underline">Create Reward</Link>
-                  <Link to="/brandprofile" className="text-blue-500 hover:underline">Profile</Link>
+                  <Link to="/create_reward" className="text-blue-500 hover:underline">Create Reward</Link>
+                  <Link to="/brand_profile" className="text-blue-500 hover:underline">Profile</Link>
                 </div>
               )}
             </div>
@@ -66,16 +62,16 @@ function Navbar() {
           )}
           {isAuthenticated && (
             <div className="space-y-2">
-              {type.user && (
+              {type?.user && (
                 <div className="flex flex-col gap-2 items-center justify-center">
-                  <Link to="/userprofile" className="text-blue-500 hover:underline">Profile</Link>
-                  <Link to="/" onClick={handleLogout} className="text-blue-500 hover:underline">Logout</Link>
+                  <Link to="/user_profile" className="text-blue-500 hover:underline">Profile</Link>
+                  <Link to="/"  className="text-blue-500 hover:underline">Logout</Link>
                 </div>
               )}
-              {type.brand && (
+              {type?.brand && (
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <Link to="/createreward" className="text-blue-500 hover:underline">Create Reward</Link>
-                  <Link to="/brandprofile" className="text-blue-500 hover:underline">Profile</Link>
+                  <Link to="/create_reward" className="text-blue-500 hover:underline">Create Reward</Link>
+                  <Link to="/brand_profile" className="text-blue-500 hover:underline">Profile</Link>
                 </div>
               )}
             </div>

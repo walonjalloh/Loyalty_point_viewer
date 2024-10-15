@@ -1,69 +1,49 @@
-import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import AuthContext from "../contexts/authContext";
 
-interface Reward {
-  _id: string;
-  rewardName: string;
-  pointsNeeded: number;
-}
-
-interface Brand {
-  name: string;
-  id:string
-  rewards: Reward[];
-}
-
-const BrandDashboard: React.FC = () => {
-  const [brand, setBrand] = useState<Brand | null>(null);
-
-  useEffect(() => {
-    // Simulate fetching brand data from API
-    const fetchBrandData = async () => {
-      const data: Brand = {
-        name: "Brand A",
-        id:"jdkokfokofkokommcmc",
-        rewards: [
-          { _id: "1", rewardName: "10% Discount", pointsNeeded: 50 },
-          { _id: "2", rewardName: "Free Shipping", pointsNeeded: 30 },
-        ],
-      };
-      setBrand(data);
-    };
-    fetchBrandData();
-  }, []);
-
-  if (!brand) return <p>Loading...</p>;
+function BrandDashboard() {
+  const auth = useContext(AuthContext);
+  const brand = auth?.brandAuth;
 
   return (
-    <section className="p-8  max-h-screen">
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <header className="mb-6 flex flex-col gap-2">
-          <h1 className="text-3xl font-bold text-gray-800">{brand.name} Dashboard</h1>
-          <p className="font-medium ">Brand Id: {brand.id}</p>
-          <p className="text-gray-600">Manage your rewards and track performance</p>
-        </header>
-
-        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Available Rewards</h2>
-        <div className="space-y-4">
-          {brand.rewards.map((reward) => (
-            <div
-              key={reward._id}
-              className="p-4 bg-gray-50 border rounded-md flex justify-between items-center"
-            >
-              <div>
-                <h3 className="text-lg font-medium text-blue-600">
-                  {reward.rewardName}
-                </h3>
-                <p className="text-gray-700">Points Needed: {reward.pointsNeeded}</p>
-              </div>
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
-                Delete
-              </button>
-            </div>
-          ))}
+    <main className="min-h-screen bg-gray-50 py-10 px-5">
+      <section className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Brand Dashboard</h1>
+          <p className="text-lg text-gray-500 mt-2">
+            Manage your brand information and rewards in one place.
+          </p>
         </div>
-      </div>
-    </section>
+
+        {brand?.length ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {brand.map((brand) => (
+              <div
+                key={brand.brandId}
+                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <h2 className="text-2xl font-semibold text-blue-600">
+                  {brand?.brandname}
+                </h2>
+                <p className="text-gray-700 mt-2">
+                  <span className="font-semibold">Brand ID:</span> {brand.brandId}
+                </p>
+                <button
+                  className="mt-4 w-full py-2 px-4 text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-all"
+                >
+                  View Rewards
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">
+            No brands found. Please log in to manage your brand.
+          </p>
+        )}
+      </section>
+    </main>
   );
-};
+}
 
 export default BrandDashboard;
