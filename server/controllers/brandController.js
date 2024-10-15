@@ -24,10 +24,12 @@ const brandSignin = async (req, res) => {
 
     const token = jwt.sign(
       { _id: brand._id.toString() },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,{
+        expiresIn:"1d"
+      }
     );
     const brandResponse = brand.toObject();
-    delete brandResponse.password;
+    delete brandResponse.brandpassword;
     res.cookie("brand", token, {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,

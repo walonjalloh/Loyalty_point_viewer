@@ -26,6 +26,7 @@ app.use(cors(corsOptions))
 
 //default route
 app.get('/', (req,res) => {
+    console.log(req,res)
     res.send(data)
 })
 

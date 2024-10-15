@@ -49,7 +49,8 @@ export const AuthProvider = ({children}:ContextProp) => {
         username,
         password,
       };
-      await axios.post(UserSignIn, newUser);
+      const response = await axios.post(UserSignIn, newUser);
+      console.log(response.data)
       toast("User login successful");
       setUsername("");
       setPassword("");

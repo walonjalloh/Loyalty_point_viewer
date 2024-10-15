@@ -19,7 +19,9 @@ const userSignin = async(req,res) => {
             return res.status(404).json({message: 'Login Failed'})
         }
     
-        const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET)
+        const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET,{
+            expiresIn:"1d"
+        })
         const userResponse = user.toObject()
         delete userResponse.password
         res.cookie("user",token, {
@@ -28,7 +30,7 @@ const userSignin = async(req,res) => {
             secure:true,
             sameSite:"None"
         })
-        res.status(200).json({message:'Login Sucessfull',user:userResponse})
+        res.status(200).json({message:'Login Sucessfull',user:userResponse,token})
     }catch(error){
         console.log(`error occurred ${error}`)
         res.status(400).json({message:error})
@@ -63,7 +65,7 @@ const userSignup = async(req,res) => {
         const userResponse = user.toObject()
         delete userResponse.password
 
-        res.status(201).json({user:userResponse,token})
+        res.status(201).json({user:userResponse})
         
 
     }catch(error){
