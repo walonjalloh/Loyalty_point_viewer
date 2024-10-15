@@ -103,7 +103,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       console.error("Error signing up brand:", error);
       setBrandName("");
       setBrandPassword("");
-      toast("Brand SignUp failed");
+      toast('Brand SignUp failed');
     }
   };
 
@@ -125,7 +125,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       setPassword("");
       setFullname("");
       setUsername("");
-      setAge(undefined);
+      setAge(0);
       setAddress("")
       toast("User SignUp sucessfull");
     } catch (error) {
@@ -133,7 +133,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       setFullname("");
       setPassword("");
       setUsername("");
-      setAge(undefined);
+      setAge(0);
       setAddress("")
       toast("User Signup failed");
     }

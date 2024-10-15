@@ -61,22 +61,10 @@ const brandSignup = async (req, res) => {
     });
 
     await newBrand.save();
-
-    const token = jwt.sign(
-      { _id: newBrand._id.toString() },
-      process.env.JWT_SECRET
-    );
-
     const brandResponse = newBrand.toObject();
     delete brandResponse.brandpassword;
 
-    res.cookie("brand", token, {
-      maxAge: 24 * 60 * 60 * 1000,
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-    });
-    res.status(201).json({ brand: brandResponse, token });
+    res.status(201).json({ brand: brandResponse});
   } catch (error) {
     if (error.name === "ValidationError") {
       // Handle validation errors specifically

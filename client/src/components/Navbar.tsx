@@ -25,7 +25,7 @@ function Navbar() {
     <header className="bg-white border-b sticky top-0 z-50 shadow-sm">
       <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center">
-          <h1 className="text-xl font-bold">LOYALTY POINT VIEWER</h1>
+          <Link to='/'><h1 className="text-xl font-bold">LOYALTY POINT VIEWER</h1></Link>
         </div>
         <div className="md:flex items-center hidden">
           {!isAuthenticated && (
