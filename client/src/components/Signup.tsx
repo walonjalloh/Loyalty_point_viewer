@@ -1,165 +1,153 @@
 import { Link } from "react-router-dom";
-import { ToastContainer} from "react-toastify";
-import { useContext } from "react";
-import AuthContext from "../contexts/authContext";
-
-
+import { ToastContainer } from "react-toastify";
+import { FaUser, FaBuilding } from "react-icons/fa"; // Icons added
+import useAuth from "../hooks/useAuth";
 function Signup() {
+  const auth = useAuth();
 
-  const auth = useContext(AuthContext)
- 
   return (
-    <main className="flex flex-col items-center min-h-screen justify-center bg-gray-100">
-      <div className="w-full max-w-md p-8 rounded-lg shadow-md bg-white">
-        <h2 className="text-2xl font-bold mb-4 text-center">Signup</h2>
-        <div className="flex justify-between mb-4">
+    <main className="flex flex-col items-center min-h-screen justify-center bg-gradient-to-r from-blue-500 to-indigo-600 text-gray-800">
+      <div className="w-full max-w-md p-8 rounded-xl shadow-lg bg-white">
+        <h2 className="text-3xl font-extrabold text-center mb-6 text-indigo-600">Signup</h2>
+
+        
+        <div className="flex justify-between mb-6">
           <button
             type="button"
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
-              auth?.type.brand ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
+              auth?.type.brand ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={auth?.handleBrand}
           >
-            Brand
+            <FaBuilding /> Brand
           </button>
+
           <button
             type="button"
-            className={`px-4 py-2 rounded-md text-sm font-medium ${
-              auth?.type.user ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
+              auth?.type.user ? "bg-blue-600 text-white" : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={auth?.handleUser}
           >
-            User
+            <FaUser /> User
           </button>
         </div>
 
+      
         {auth?.type.user && (
-          <form onSubmit={auth.handleUserSignUp}>
-            <div className="mb-4">
-              <label htmlFor="fullname" className="block text-sm font-medium mb-2">
-                Fullname
-              </label>
+          <form onSubmit={auth.handleUserSignUp} className="space-y-4">
+            <div>
+              <label htmlFor="fullname" className="block text-sm font-medium mb-1">Full Name</label>
               <input
                 type="text"
                 id="fullname"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.fullname}
                 onChange={(e) => auth.setFullname(e.target.value)}
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="address" className="block text-sm font-medium mb-2">
-                Address
-              </label>
+
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium mb-1">Address</label>
               <input
                 type="text"
                 id="address"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.address}
                 onChange={(e) => auth.setAddress(e.target.value)}
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="age" className="block text-sm font-medium mb-2">
-                Age
-              </label>
+
+            <div>
+              <label htmlFor="age" className="block text-sm font-medium mb-1">Age</label>
               <input
                 type="number"
                 id="age"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.age}
                 onChange={(e) => auth.setAge(Number(e.target.value))}
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="username" className="block text-sm font-medium mb-2">
-                Username
-              </label>
+
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium mb-1">Username</label>
               <input
                 type="text"
                 id="username"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.username}
                 onChange={(e) => auth.setUsername(e.target.value)}
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
-                Password
-              </label>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
               <input
                 type="password"
                 id="password"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.password}
                 onChange={(e) => auth.setPassword(e.target.value)}
               />
             </div>
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                User Sign up
-              </button>
-            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
+            >
+              User Signup
+            </button>
           </form>
         )}
 
+    
         {auth?.type.brand && (
-          <form onSubmit={auth.handleBrandSignUp}>
-            <div className="mb-4">
-              <label htmlFor="brandname" className="block text-sm font-medium mb-2">
-                Brand Name
-              </label>
+          <form onSubmit={auth.handleBrandSignUp} className="space-y-4">
+            <div>
+              <label htmlFor="brandname" className="block text-sm font-medium mb-1">Brand Name</label>
               <input
                 type="text"
                 id="brandname"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.brandname}
                 onChange={(e) => auth.setBrandName(e.target.value)}
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="brandpassword" className="block text-sm font-medium mb-2">
-                Password
-              </label>
+
+            <div>
+              <label htmlFor="brandpassword" className="block text-sm font-medium mb-1">Password</label>
               <input
                 type="password"
                 id="brandpassword"
-                className="block w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-1"
+                className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500"
                 required
                 value={auth.brandpassword}
                 onChange={(e) => auth.setBrandPassword(e.target.value)}
               />
             </div>
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Brand Sign up
-              </button>
-            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-semibold"
+            >
+              Brand Signup
+            </button>
           </form>
         )}
 
         <div className="text-center mt-4">
           <Link to="/login" className="text-blue-500 hover:underline">
-            Already have an account? Sign in
+            Already have an account? Sign In
           </Link>
         </div>
-        <ToastContainer
-         position="top-right"
-         autoClose={5000}
-         hideProgressBar={false}
-        />
+
+        <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
       </div>
     </main>
   );

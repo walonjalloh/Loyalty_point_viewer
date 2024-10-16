@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import AuthContext from "../contexts/authContext";
+import useAuth from "../hooks/useAuth";
 
 function BrandDashboard() {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const brand = auth?.brandAuth;
 
   return (

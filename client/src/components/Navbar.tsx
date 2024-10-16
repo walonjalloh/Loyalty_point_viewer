@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, LogOut, User, Gift, PlusCircle, LogIn, UserPlus } from "lucide-react";
-import AuthContext from "../contexts/authContext";
+import useAuth from "../hooks/useAuth";
 
 function Navbar() {
   const [isOpened, setIsOpened] = useState(false);
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
 
   const isAuthenticated = auth?.isAuthenticated;
   const type = auth?.type;
@@ -15,7 +15,7 @@ function Navbar() {
   return (
     <header className="bg-white shadow-md border-b sticky top-0 z-50">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo / Brand Name */}
+        
         <div className="flex items-center space-x-2">
           <Link to="/" className="text-2xl font-bold text-blue-600 flex items-center">
             <Gift className="w-6 h-6 mr-2" />
@@ -23,7 +23,7 @@ function Navbar() {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
+        
         <div className="hidden md:flex items-center space-x-6">
           {!isAuthenticated ? (
             <div className="flex space-x-4">
@@ -60,13 +60,13 @@ function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Icon */}
+        
         <div className="md:hidden">
           <Menu className="w-6 h-6 text-gray-600 cursor-pointer" onClick={toggleMenu} />
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+    
       {isOpened && (
         <div className="bg-white shadow-md border-t py-4 md:hidden">
           <div className="flex flex-col items-center space-y-3">
