@@ -3,7 +3,7 @@ import { Auth, ContextProp, AuthContextType, UserAuth, BrandAuth } from "../util
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BrandSignIn, UserSignIn, BrandSignup, UserSignup} from "../utils/url/url";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,  useLocation } from "react-router-dom";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -26,6 +26,10 @@ export const AuthProvider = ({children}:ContextProp) => {
 
   //navigation part
   const navigate = useNavigate()
+  const location = useLocation()
+  
+  //sends the user to the location they wanted to go before they where brought to the signin page
+  const from = location?.state?.from?.pathname || "/"
 
   //the protected routes tools
   const [userLogin, setUserLogin] = useState<boolean>(false);
@@ -67,7 +71,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       setUsername("");
       setPassword("");
       setUserLogin(!userLogin)
-      navigate('/')
+      navigate(from, { replace:true })
     } catch (error) {
       console.log(`Error occurred: ${error}`);
       toast("User login failed");
@@ -100,7 +104,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       setBrandName("");
       setBrandPassword("");
       setBrandLogin(!brandLogin)
-      navigate('/')
+      navigate(from, {replace:true})
       console.log(brandAuth)
     } catch (error) {
       console.log(`Error occurred: ${error}`);
