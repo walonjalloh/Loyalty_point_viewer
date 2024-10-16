@@ -27,6 +27,10 @@ export const AuthProvider = ({children}:ContextProp) => {
   //navigation part
   const navigate = useNavigate()
 
+  //the protected routes tools
+  const [userLogin, setUserLogin] = useState<boolean>(false);
+  const [brandLogin, setBrandLogin] = useState<boolean>(false)
+
   
 
   const handleUser = (): void => {
@@ -62,6 +66,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       toast("User login successful");
       setUsername("");
       setPassword("");
+      setUserLogin(!userLogin)
       navigate('/')
     } catch (error) {
       console.log(`Error occurred: ${error}`);
@@ -94,6 +99,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       toast("Brand login successful");
       setBrandName("");
       setBrandPassword("");
+      setBrandLogin(!brandLogin)
       navigate('/')
       console.log(brandAuth)
     } catch (error) {
@@ -187,7 +193,9 @@ export const AuthProvider = ({children}:ContextProp) => {
         setAge,
         userAuth,
         brandAuth,
-        isAuthenticated
+        isAuthenticated,
+        userLogin,
+        brandLogin
       }}>
         {children}
       </AuthContext.Provider>

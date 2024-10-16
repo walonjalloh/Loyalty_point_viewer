@@ -74,7 +74,9 @@ interface AuthContextType extends Auth {
   setAge:React.Dispatch<React.SetStateAction<number | undefined>>
   userAuth:UserAuth[]
   brandAuth:BrandAuth[],
-  isAuthenticated:boolean
+  isAuthenticated:boolean,
+  userLogin:boolean,
+  brandLogin:boolean
 }
 
 interface User {

@@ -6,7 +6,7 @@ const RequireAuth = () => {
     const location = useLocation()
 
     return(
-        userAuth?.isAuthenticated  
+        userAuth?.brandLogin  
         ? <Outlet/>  
         : <Navigate to='/login' state={{from:location}} replace />
     )
