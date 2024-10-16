@@ -3,6 +3,7 @@ import { Auth, ContextProp, AuthContextType, UserAuth, BrandAuth } from "../util
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BrandSignIn, UserSignIn, BrandSignup, UserSignup} from "../utils/url/url";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -18,9 +19,13 @@ export const AuthProvider = ({children}:ContextProp) => {
   const [brandpassword, setBrandPassword] = useState<string>("");
 
 
+  //this is the authentication and authorization path
   const [userAuth, setUserAuth] = useState<UserAuth[]>([])
   const [brandAuth, setBrandAuth] = useState<BrandAuth[]>([])
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+
+  //navigation part
+  const navigate = useNavigate()
 
   
 
@@ -57,6 +62,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       toast("User login successful");
       setUsername("");
       setPassword("");
+      navigate('/')
     } catch (error) {
       console.log(`Error occurred: ${error}`);
       toast("User login failed");
@@ -88,6 +94,7 @@ export const AuthProvider = ({children}:ContextProp) => {
       toast("Brand login successful");
       setBrandName("");
       setBrandPassword("");
+      navigate('/')
       console.log(brandAuth)
     } catch (error) {
       console.log(`Error occurred: ${error}`);

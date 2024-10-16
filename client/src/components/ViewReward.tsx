@@ -2,27 +2,53 @@ import { useContext } from 'react';
 import RewardContext from '../contexts/rewardContext.tsx';
 
 function ViewReward() {
-  const rewardContext = useContext(RewardContext)
+  const rewardContext = useContext(RewardContext);
 
   return (
-    <section className="bg-gray-100 p-4 rounded-md shadow-sm">
-      <div className="flex flex-col justify-between items-center mb-4">
-        <p className="text-xl font-bold">Available Rewards</p>
-        {rewardContext?.reward.length === 0 && <p className="text-red-500 text-3xl my-[60px]">Reward List is empty</p>}
-      </div>
-      <main className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {rewardContext?.reward.map(reward => (
-          <div key={reward.rewardName} className="bg-white flex flex-col p-4 rounded-md gap-1 shadow-sm">
-            <h1 className="text-lg font-medium mb-2">{reward.rewardName}</h1>
-            <p className="text-gray-700">{reward.rewardDescription}</p>
-            <p className="text-blue-500 font-bold">Points Needed: {reward.pointsNeeded}</p>
-            <div className='flex justify-between items-center'>
-                <button className='border-2 border-black/50 px-6 py-1 rounded-md font-bold '>view</button>
-                <button className='border-2 border-blue-500 bg-blue-500 rounded-md text-white font-bold px-4 py-1 '>claim reward</button>
+    <section className="min-h-screen bg-gray-50 py-10 px-5">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-extrabold text-gray-800">
+            Available Rewards
+          </h1>
+          {rewardContext?.reward.length === 0 && (
+            <p className="text-red-500 text-2xl my-10">
+              Reward List is empty
+            </p>
+          )}
+        </div>
+
+        {/* Rewards Grid */}
+        <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {rewardContext?.reward.map((reward) => (
+            <div
+              key={reward.rewardName}
+              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
+            >
+              <h2 className="text-2xl font-semibold text-blue-600 mb-2">
+                {reward.rewardName}
+              </h2>
+              <p className="text-gray-700 mb-4">
+                {reward.rewardDescription}
+              </p>
+              <p className="text-lg text-blue-500 font-bold mb-4">
+                Points Needed: {reward.pointsNeeded}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex justify-between items-center mt-auto">
+                <button className="border-2 border-gray-300 text-gray-600 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition-all">
+                  View Details
+                </button>
+                <button className="bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition-all">
+                  Claim Reward
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </main>
+          ))}
+        </main>
+      </div>
     </section>
   );
 }

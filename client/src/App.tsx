@@ -8,11 +8,15 @@ import Signup from "./components/Signup";
 import UserDashboard from "./components/UserDashboard";
 import ViewReward from "./components/ViewReward";
 import { Routes, Route } from "react-router-dom";
+import { RewardProvider } from './contexts/rewardContext.tsx'
+import { AuthProvider } from './contexts/authContext.tsx'
 
 function App() {
   return (
     <div className="w-full h-full">
-      <Navbar />
+      <AuthProvider>
+        <RewardProvider>
+        <Navbar />
       <Routes>
         <Route path="/" element={<Hero />} />
       </Routes>
@@ -39,6 +43,8 @@ function App() {
         <Route path="/brand_profile" element={<BrandDashboard />} />
       </Routes>
       <Footer />
+        </RewardProvider>
+      </AuthProvider>
     </div>
   );
 }
