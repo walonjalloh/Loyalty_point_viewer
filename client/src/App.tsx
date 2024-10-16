@@ -8,43 +8,36 @@ import Signup from "./components/Signup";
 import UserDashboard from "./components/UserDashboard";
 import ViewReward from "./components/ViewReward";
 import { Routes, Route } from "react-router-dom";
-import { RewardProvider } from './contexts/rewardContext.tsx'
-import { AuthProvider } from './contexts/authContext.tsx'
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
+
 
 function App() {
   return (
-    <div className="w-full h-full">
-      <AuthProvider>
-        <RewardProvider>
-        <Navbar />
+    <div className="w-full h-full"> 
+    <Navbar/>
       <Routes>
-        <Route path="/" element={<Hero />} />
+       
+        <Route path="/" element={<Layout/>}>
+
+        <Route path='login' element={<Signin/>} />
+        <Route path='register' element={<Signup/>} />
+        <Route index element={<Hero/>} />        
+        <Route path='reward' element={<ViewReward/>} />
+
+
+        <Route  element={<RequireAuth/>}>
+          <Route path='create_reward' element={<CreateReward/>} />
+          <Route path='brand_profile' element={<BrandDashboard/>} />
+        </Route>
+
+
+        <Route path='user_profile' element={<UserDashboard/>} />
+
+        </Route>
+        
       </Routes>
-      <Routes>
-        <Route path="/login" element={<Signin />} />
-      </Routes>
-      <Routes>
-        <Route path="/register" element={<Signup />} />
-      </Routes>
-      <Routes>
-        {" "}
-        <Route path="/user_profile" element={<UserDashboard />} />
-      </Routes>
-      <Routes>
-        {" "}
-        <Route path="/create_reward" element={<CreateReward />} />
-      </Routes>
-      <Routes>
-        {" "}
-        <Route path="/reward" element={<ViewReward />} />
-      </Routes>
-      <Routes>
-        {" "}
-        <Route path="/brand_profile" element={<BrandDashboard />} />
-      </Routes>
-      <Footer />
-        </RewardProvider>
-      </AuthProvider>
+      <Footer/>
     </div>
   );
 }
