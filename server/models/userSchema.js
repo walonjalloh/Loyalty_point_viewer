@@ -23,6 +23,11 @@ const userSchema = new Schema({
         type:Number,
         required:true
     },
+    refreshToken : {
+        type:String,
+        default:" ",
+        required:true
+    },
     points:{
         type:Number,
         default:0,

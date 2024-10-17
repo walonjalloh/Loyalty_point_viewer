@@ -14,6 +14,11 @@ const brandSchema = new Schema({
         type:Date,
         default:Date.now
     },
+    refreshToken: {
+        type:String,
+        default:" ",
+        required:true
+    },
     rewards:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Reward'

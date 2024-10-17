@@ -11,7 +11,7 @@ const brandAuth = async (req, res, next) => {
         .json({ error: "No token provided. Please authenticate." });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     const brand = await Brand.findOne({ _id: decoded._id });
 

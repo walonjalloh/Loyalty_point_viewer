@@ -28,19 +28,26 @@ const brandSignin = async (req, res) => {
         expiresIn:"10m"
       }
     );
+
     const refreshToken = jwt.sign({_id:brand._id.toString()}, process.env.REFRESH_TOKEN_SECRET,{
       expiresIn:"1d"
     })
+
+    //saving the refresh token to the database
+    brand.refreshToken = refreshToken
+    await brand.save()
+
+
     const brandResponse = brand.toObject();
     delete brandResponse.brandpassword;
-    res.cookie("brand", accessToken, {
-      path:'/',
+
+    res.cookie("brand", refreshToken, {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: true,
       sameSite: "None",
     });
-    res.status(200).json({ brand: brandResponse, token });
+    res.status(200).json({ brand: brandResponse, accessToken});
   } catch (error) {
     res.status(404).json({ message: "error signing" });
   }

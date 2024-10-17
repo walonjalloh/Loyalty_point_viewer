@@ -26,16 +26,21 @@ const userSignin = async(req,res) => {
         const refreshToken = jwt.sign({_id:user._id.toString()}, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn:"1d"
         })
+
+
+        //saving refresh token to the database 
+        user.refreshToken = refreshToken
+        await user.save()
+
         const userResponse = user.toObject()
         delete userResponse.password
-        res.cookie("user",accessToken, {
-            path:'/',
+        res.cookie("user",refreshToken, {
             maxAge:24 * 60 * 60 * 1000,
             http0nly:true,
             secure:true,
             sameSite:"None"
         })
-        res.status(200).json({message:'Login Sucessfull',user:userResponse,token})
+        res.status(200).json({message:'Login Sucessfull',user:userResponse,accessToken })
     }catch(error){
         console.log(`error occurred ${error}`)
         res.status(400).json({message:error})

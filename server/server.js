@@ -6,6 +6,7 @@ import { config } from 'dotenv'
 import { userRouter } from './routes/userRoute.js'
 import { brandRouter } from './routes/brandRoute.js'
 import { rewardRouter } from './routes/rewardRoute.js'
+import { refreshRouter } from './routes/refresh.js'
 import cookieParse from 'cookie-parser'
 import fs from 'fs'
 
@@ -31,6 +32,9 @@ app.get('/', (req,res) => {
 
 //user router with all the user routes
 app.use('/api/user', userRouter)
+
+//refresh token route
+app.use('/api/refresh', refreshRouter)
 
 //brand router with all the brand routes
 app.use('/api/brand',brandRouter)

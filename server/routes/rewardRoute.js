@@ -9,7 +9,7 @@ const rewardRouter = express.Router()
 rewardRouter.route('/').get(getAllRewards)
 rewardRouter.route('/create').post(brandAuth, createReward)
 rewardRouter.route('/:brandId').delete( brandAuth,deleteAReward)
-rewardRouter.route('/:rewardId/user/:userId').patch(brandAuth, updateReward)
+rewardRouter.route('/:rewardId/user/:userId').patch( updateReward)
 
 export {
     rewardRouter
