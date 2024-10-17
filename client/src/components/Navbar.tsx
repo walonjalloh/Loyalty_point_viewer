@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, LogOut, User, Gift, PlusCircle, LogIn, UserPlus } from "lucide-react";
 import useAuth from "../hooks/useAuth";
+import { ModeToggle } from "./mode-toggle";
 
 function Navbar() {
   const [isOpened, setIsOpened] = useState(false);
@@ -63,6 +64,9 @@ function Navbar() {
         
         <div className="md:hidden">
           <Menu className="w-6 h-6 text-gray-600 cursor-pointer" onClick={toggleMenu} />
+        </div>
+        <div>
+          <ModeToggle/>
         </div>
       </nav>
 

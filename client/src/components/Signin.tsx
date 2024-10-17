@@ -2,6 +2,7 @@ import useAuth from "../hooks/useAuth";
 import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import { FaUser, FaBuilding } from "react-icons/fa"; // Icons added
+import { Button } from "./ui/button";
 
 function Signin() {
   const auth = useAuth();
@@ -126,6 +127,7 @@ function Signin() {
 
         <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
       </div>
+      <Button variant='outline'>Walon</Button>
     </section>
   );
 }
