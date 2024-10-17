@@ -27,7 +27,7 @@ export const AuthProvider = ({children}:ContextProp) => {
   //navigation part
   const navigate = useNavigate()
   const location = useLocation()
-  
+
   //sends the user to the location they wanted to go before they where brought to the signin page
   const from = location?.state?.from?.pathname || "/"
 
@@ -35,7 +35,7 @@ export const AuthProvider = ({children}:ContextProp) => {
   const [userLogin, setUserLogin] = useState<boolean>(false);
   const [brandLogin, setBrandLogin] = useState<boolean>(false)
 
-  
+
 
   const handleUser = (): void => {
     setType({ user: true, brand: false });

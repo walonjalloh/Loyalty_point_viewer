@@ -19,12 +19,17 @@ const userSignin = async(req,res) => {
             return res.status(404).json({message: 'Login Failed'})
         }
     
-        const token = jwt.sign({_id:user._id.toString()}, process.env.JWT_SECRET,{
+        const accessToken = jwt.sign({_id:user._id.toString()}, process.env.ACCESS_TOKEN_SECRET,{
+            expiresIn:"10m"
+        })
+
+        const refreshToken = jwt.sign({_id:user._id.toString()}, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn:"1d"
         })
         const userResponse = user.toObject()
         delete userResponse.password
-        res.cookie("user",token, {
+        res.cookie("user",accessToken, {
+            path:'/',
             maxAge:24 * 60 * 60 * 1000,
             http0nly:true,
             secure:true,
@@ -103,9 +108,38 @@ const deleteUser = async(req,res) => {
     }
 }
 
+const getAllUser = async(req,res) => {
+    try{
+        const users = await User.find({})
+        if(!users){
+            res.status(404).json({message:"No users available"})
+        }
+        res.status(200).json(users)
+    }catch(error){
+        res.status(400).json({message:error})
+    }
+}
+
+const autoLogin = async(req,res) => {
+    const cookie = req.header.cookie
+
+    if(!cookie || cookie === null){
+       return res.status(401)
+    }
+    return res.status(200)
+}
+
+const logout = async(req,res) => {
+    res.clear('user')
+    return res.status(200)
+}
+
 export {
     userSignin,
     userSignup,
     getOneUser,
-    deleteUser
+    deleteUser,
+    getAllUser,
+    autoLogin,
+    logout
 }

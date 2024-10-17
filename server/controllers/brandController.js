@@ -22,15 +22,19 @@ const brandSignin = async (req, res) => {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       { _id: brand._id.toString() },
-      process.env.JWT_SECRET,{
-        expiresIn:"1d"
+      process.env.ACCESS_TOKEN_SECRET,{
+        expiresIn:"10m"
       }
     );
+    const refreshToken = jwt.sign({_id:brand._id.toString()}, process.env.REFRESH_TOKEN_SECRET,{
+      expiresIn:"1d"
+    })
     const brandResponse = brand.toObject();
     delete brandResponse.brandpassword;
-    res.cookie("brand", token, {
+    res.cookie("brand", accessToken, {
+      path:'/',
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: true,
@@ -100,4 +104,18 @@ const deleteBrand = async (req, res) => {
   }
 };
 
-export { brandSignin, brandSignup, getAllBrand, deleteBrand };
+const brandautoLogin = async(req,res) => {
+  const cookie = req.header.cookie
+
+  if(!cookie || cookie === null){
+     return res.status(401)
+  }
+  return res.status(200)
+}
+
+const brandlogout = async(req,res) => {
+  res.clear('brand')
+  return res.status(200)
+}
+
+export { brandSignin, brandSignup, getAllBrand, deleteBrand,brandautoLogin,brandlogout };

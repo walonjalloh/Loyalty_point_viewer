@@ -41,7 +41,7 @@ function UserDashboard() {
                   <span className="font-medium text-gray-600">Address:</span> {user.address}
                 </p>
               </div>
-
+              
               
               <div className="w-full md:w-1/2 flex flex-col gap-4 items-center justify-center">
                 <h2 className="text-2xl font-semibold text-gray-700 border-b pb-2 flex items-center gap-2">
