@@ -19,16 +19,16 @@ const userLogout = async(req,res) => {
             return res.sendStatus(204)
         }
     
-        const deleteToken = User.findOneAndUpdare({refreshToken:" "})
+        const deleteToken = await User.findOneAndUpdate({refreshToken:" "})
         if(!deleteToken){
             return res.sendStatus(204)
         }
         res.clearCookie('user', {
             httpOnly:true,
-            maxAge:24 * 60 * 60 * 1000 
         })
         res.status(204).json({message:"User logout successfull"})
     }catch(error){
+        console.log(error)
         res.status(400).json({message:error})
     }
 }
@@ -45,13 +45,12 @@ const brandLogout = async(req,res) => {
         if (!user) {
             res.clearCookie('brand', {
                 httpOnly:true,
-                maxAge:24 * 60 * 60 * 1000
             })
     
             return res.sendStatus(204)
         }
     
-        const deleteToken = await Brand.findOneAndUpdare({refreshToken:" "})
+        const deleteToken = await Brand.findOneAndUpdate({refreshToken:" "})
         if(!deleteToken){
             return res.sendStatus(204)
         }
