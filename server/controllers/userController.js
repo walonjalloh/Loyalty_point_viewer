@@ -37,7 +37,7 @@ const userSignin = async(req,res) => {
         res.cookie("user",refreshToken, {
             maxAge:24 * 60 * 60 * 1000,
             http0nly:true,
-            secure:true,
+            secure:false,
             sameSite:"None"
         })
         res.status(200).json({message:'Login Sucessfull',user:userResponse,accessToken })

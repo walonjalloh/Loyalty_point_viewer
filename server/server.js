@@ -7,6 +7,7 @@ import { userRouter } from './routes/userRoute.js'
 import { brandRouter } from './routes/brandRoute.js'
 import { rewardRouter } from './routes/rewardRoute.js'
 import { refreshRouter } from './routes/refresh.js'
+import { logoutRouter } from './routes/logoutRoute.js'
 import cookieParse from 'cookie-parser'
 import fs from 'fs'
 
@@ -41,6 +42,9 @@ app.use('/api/brand',brandRouter)
 
 //reward router with all the reward routes
 app.use('/api/reward', rewardRouter)
+
+//logout router to handle user and brand logout
+app.use('/api/logout',logoutRouter)
 
 
 export {

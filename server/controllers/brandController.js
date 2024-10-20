@@ -44,7 +44,7 @@ const brandSignin = async (req, res) => {
     res.cookie("brand", refreshToken, {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
-      secure: true,
+      secure: false,
       sameSite: "None",
     });
     res.status(200).json({ brand: brandResponse, accessToken});
